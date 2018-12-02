@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,10 +16,20 @@ import { CurrentTrainingComponent } from './training/current-training/current-tr
 import { NewTrainingComponent } from './training/new-training/new-training.component';
 import { PastTrainingsComponent } from './training/past-trainings/past-trainings.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { StopTrainingComponent } from './training/stop-training/stop-training.component';
+
+const config = {
+  apiKey: 'AIzaSyAt73WYey-qgj7xP2Ka9KwXZ3oQHtWEedk',
+  authDomain: 'ng-fitness-app-11751.firebaseapp.com',
+  databaseURL: 'https://ng-fitness-app-11751.firebaseio.com',
+  projectId: 'ng-fitness-app-11751',
+  storageBucket: 'ng-fitness-app-11751.appspot.com',
+  messagingSenderId: '303432071794'
+};
 
 @NgModule({
   declarations: [
@@ -30,6 +43,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
+    StopTrainingComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,10 +51,16 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(config),
+    AngularFirestoreModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+  ],
+  entryComponents: [
+    StopTrainingComponent
   ],
   bootstrap: [AppComponent]
 })
