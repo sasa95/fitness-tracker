@@ -14,7 +14,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { AuthModule } from './auth/auth.module';
 import { StoreModule } from '@ngrx/store';
-import { appReducer } from './app.reducer';
+import { reducers } from './app.reducer';
 
 const config = {
   apiKey: 'AIzaSyAt73WYey-qgj7xP2Ka9KwXZ3oQHtWEedk',
@@ -41,7 +41,7 @@ const config = {
     AngularFireModule.initializeApp(config),
     AngularFirestoreModule,
     AuthModule,
-    StoreModule.forRoot({ ui: appReducer })
+    StoreModule.forRoot(reducers)
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },

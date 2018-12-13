@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { UiService } from 'src/app/shared/ui.service';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../../app.reducer';
+import * as fromRoot from '../../app.reducer';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -20,13 +20,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private uiService: UiService,
-    private store: Store<{ ui: fromApp.State }>
+    private store: Store<{ ui: fromRoot.State }>
   ) { }
 
   ngOnInit() {
-    this.isLoading$ = this.store.pipe(
-      map(state => state.ui.isLoading)
-    );
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
 
     this.loginForm = new FormGroup({
       email: new FormControl('', {
