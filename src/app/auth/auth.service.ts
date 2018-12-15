@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
 import * as UI from '../shared/ui.actions';
 import * as Auth from './auth.actions';
+import { TrainingService } from '../training/training.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthService {
     private router: Router,
     private afAuth: AngularFireAuth,
     private uiService: UiService,
+    private trainingService: TrainingService,
     private store: Store<fromRoot.State>
   ) { }
 
@@ -39,10 +41,10 @@ export class AuthService {
       authData.password
     ).then(result => {
       console.log(result);
-      this.store.dispatch({ type: 'STOP_LOADING' });
+      this.store.dispatch(new UI.StopLoading());
     })
       .catch(error => {
-        this.uiService.loadingStateChanged.next(false);
+        this.store.dispatch(new UI.StopLoading());
         console.log(error);
         this.uiService.showSnackbar(error.message, null, 3000);
       })
@@ -66,5 +68,6 @@ export class AuthService {
 
   logout() {
     this.afAuth.auth.signOut();
+    this.trainingService.cancelSubscriptions();
   }
 }
